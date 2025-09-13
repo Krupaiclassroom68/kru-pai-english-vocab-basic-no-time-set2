@@ -1,0 +1,688 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Kru Pai Classroom • 30 Days / 300 Words (All-in-One)</title>
+  <style>
+    :root{
+      --brand:#2563eb; --accent:#f59e0b; --ok:#10b981; --bad:#ef4444;
+      --bg:#f7fbff; --ink:#0f172a; --muted:#475569; --card:#ffffff; --chip:#e2e8f0;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:'Noto Sans Thai','Noto Sans Thai UI','Sarabun','Leelawadee UI',Tahoma,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+    .wrap{max-width:1000px;margin:0 auto;padding:16px}
+    header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;position:sticky;top:0;background:rgba(247,251,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid #e2e8f0;z-index:10}
+    .logo{display:flex;align-items:center;gap:10px}
+    .mark{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,var(--brand),#60a5fa);display:grid;place-items:center;color:#fff;font-weight:900;box-shadow:0 8px 24px rgba(37,99,235,.25)}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 22px;border-radius:14px;border:2px solid #111;background:#fff;font-weight:900;cursor:pointer;font-size:18px}
+    .btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
+    .btn.reset{background:#ef4444;border-color:#ef4444;color:#fff}
+    .card{background:var(--card);border-radius:16px;box-shadow:0 10px 24px rgba(15,23,42,.06);padding:16px}
+    .grid{display:grid;gap:12px}
+    @media(min-width:720px){ .grid4{grid-template-columns:repeat(4,1fr)} }
+    @media(min-width:1024px){ .grid6{grid-template-columns:repeat(6,1fr)} }
+    .pill{display:inline-block;background:#e0e7ff;color:#1e3a8a;border-radius:999px;padding:6px 10px;font-weight:800}
+    .muted{color:var(--muted)}
+    .progress{display:flex;gap:10px;align-items:center}
+    .bar{flex:1;height:14px;background:#e5e7eb;border-radius:999px;overflow:hidden}
+    .bar>span{display:block;height:100%;background:linear-gradient(90deg,#10b981,#34d399)}
+    .steps .step{position:relative;padding:12px;border:2px solid #e5e7eb;border-radius:12px;background:#fff;min-height:78px}
+    .steps .step.pass{border-color:#bbf7d0;background:#f0fdf4}
+    .badge-pass{position:absolute;top:6px;right:6px;background:linear-gradient(135deg,#10b981,#34d399);color:#063; padding:2px 8px;border-radius:999px;font-size:10px;font-weight:900;letter-spacing:.4px}
+    .center{display:grid;place-items:center;text-align:center}
+    .hide{display:none !important}
+    /* Game styles */
+    .qa{border:2px solid #e2e8f0;border-radius:14px;padding:18px;font-size:22px;line-height:1.35}
+    .opt{display:block;background:#f8fafc;border:2px solid #e2e8f0;border-radius:12px;padding:14px 16px;margin:10px 0;font-weight:900;cursor:pointer;font-size:20px}
+    .opt.correct{background:#ecfdf5;border-color:#a7f3d0}
+    .opt.wrong{background:#fff1f2;border-color:#fecdd3}
+    .timer{font-weight:900;font-size:18px}
+    .chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:10px 0}
+    .chip{display:inline-flex;align-items:center;justify-content:center;min-width:42px;padding:12px 14px;border-radius:12px;background:#f8fafc;border:2px solid var(--chip);font-weight:900;cursor:pointer;user-select:none;font-size:22px}
+    .chip.used{opacity:.45;pointer-events:none}
+    .answerbox{min-height:54px;border:2px dashed #cbd5e1;border-radius:12px;padding:10px;display:flex;gap:8px;justify-content:center;align-items:center;background:#fff}
+    .answerbox .slot{min-width:40px;min-height:46px;background:#eff6ff;border:2px dashed #93c5fd;border-radius:10px;display:grid;place-items:center;padding:8px;font-weight:900;font-size:22px}
+    .answerbox .slot.filled{background:#e0f2fe;border-style:solid}
+  
+  /* Player banner */
+  .player-banner{max-width:1000px;margin:8px auto 0 auto;padding:0 16px}
+  .player-card{background:#ffffff;border:2px solid #e2e8f0;border-radius:12px;padding:8px 12px;display:flex;align-items:center;gap:10px;box-shadow:0 8px 18px rgba(15,23,42,.05)}
+  .player-chip{background:linear-gradient(135deg,#2563eb,#60a5fa);color:#fff;border-radius:999px;padding:6px 10px;font-weight:900;letter-spacing:.3px}
+  .player-name{font-weight:900;font-size:18px;color:#2563eb}
+  /* Modal */
+  .modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,.55);display:none;align-items:center;justify-content:center;z-index:9999}
+  .modal{background:#fff;border-radius:16px;max-width:420px;width:90%;padding:18px;border:2px solid #e2e8f0;box-shadow:0 24px 52px rgba(0,0,0,.25)}
+  .modal h3{margin:0 0 8px 0}
+  .modal .muted{margin-bottom:10px}
+  .field{display:flex;gap:8px}
+  .field input{flex:1;border:2px solid #cbd5e1;border-radius:10px;padding:10px 12px;font-size:16px}
+
+
+  /* Celebration */
+  .celebration{position:fixed;inset:0;background:linear-gradient(135deg,#d1fae5,#fef9c3);display:none;align-items:center;justify-content:center;flex-direction:column;z-index:99999;text-align:center}
+  .celebration h1{font-size:28px;color:#065f46;margin-bottom:12px}
+  .celebration .msg{font-size:18px;color:#166534;margin-bottom:20px}
+  canvas.confetti{position:fixed;inset:0;pointer-events:none;z-index:100000}
+
+
+  /* Celebration */
+  .cele-backdrop{position:fixed;inset:0;background:rgba(6,95,70,.85);display:none;align-items:center;justify-content:center;z-index:9998}
+  .cele-card{background:#fff;border-radius:18px;padding:24px;max-width:560px;width:92%;border:3px solid #86efac;
+    box-shadow:0 24px 80px rgba(0,0,0,.35);text-align:center}
+  .cele-title{font-size:22px;margin:0 0 8px 0;color:#065f46;font-weight:900}
+  .cele-sub{color:#166534;margin:0 0 14px 0;font-weight:700}
+  .cele-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 18px;border-radius:12px;border:2px solid #065f46;background:#10b981;color:#053d2e;font-weight:900;cursor:pointer}
+  /* Confetti pieces */
+  #confettiBox{position:fixed;inset:0;pointer-events:none;z-index:9999;overflow:hidden}
+  .confetti{position:absolute;width:10px;height:14px;opacity:.9;transform:translateY(-100vh) rotate(0deg)}
+  @keyframes fallSpin{ 0%{ transform:translateY(-100vh) rotate(0deg);} 100%{ transform:translateY(110vh) rotate(960deg);} }
+
+
+/* ===== Visual Upgrades (Day cards, Player name, PASS badge) ===== */
+.steps .step{
+  padding:18px;
+  border-width:3px;
+  border-radius:16px;
+  box-shadow:0 6px 14px rgba(2,6,23,.06);
+  transition:transform .15s ease, box-shadow .15s ease, border-color .2s ease;
+}
+.steps .step:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 24px rgba(2,6,23,.09);
+}
+.steps .step.pass{
+  border-color:#10b981;
+  background:linear-gradient(180deg,#ecfdf5 0%, #d1fae5 100%);
+  position:relative;
+}
+
+.badge-pass{
+  top:8px; right:8px;
+  background:linear-gradient(135deg,#22c55e,#16a34a);
+  color:#fff;
+  padding:6px 12px;
+  border-radius:999px;
+  font-size:14px;
+  letter-spacing:.6px;
+  box-shadow:0 8px 18px rgba(34,197,94,.35), inset 0 0 0 2px rgba(255,255,255,.25);
+  animation:popPulse 1.4s ease-in-out infinite;
+}
+@keyframes popPulse{
+  0%{ transform:scale(1); box-shadow:0 8px 18px rgba(34,197,94,.35), inset 0 0 0 2px rgba(255,255,255,.25); }
+  50%{ transform:scale(1.06); box-shadow:0 10px 24px rgba(34,197,94,.48), inset 0 0 0 2px rgba(255,255,255,.25); }
+  100%{ transform:scale(1); box-shadow:0 8px 18px rgba(34,197,94,.35), inset 0 0 0 2px rgba(255,255,255,.25); }
+}
+
+/* Player header emphasis */
+.player-card{
+  border-width:3px;
+  border-color:#c7d2fe;
+  background:linear-gradient(180deg,#ffffff, #f8fafc);
+}
+.player-name{
+  font-size:24px !important;
+  font-weight:1000;
+  letter-spacing:.3px;
+  text-shadow:0 1px 0 #fff, 0 2px 10px rgba(37,99,235,.12);
+}
+.player-chip{
+  background:linear-gradient(135deg,#2563eb,#1d4ed8);
+  box-shadow:0 8px 18px rgba(37,99,235,.25);
+}
+
+/* Make 'Day' tiles text a bit larger */
+.steps .step > div:first-child{
+  font-size:18px;
+}
+
+
+/* ===== Cover (Basic – Light Blue) ===== */
+.cover-wrap.basic{
+  position:fixed; inset:0; z-index:9999;
+  display:flex; align-items:center; justify-content:center;
+  background:#e6f2ff;
+  transition: opacity .5s ease, transform .5s ease;
+}
+.cover-wrap.off{ opacity:0; transform:scale(1.02); pointer-events:none; }
+
+.cover-inner{
+  text-align:center;
+  padding:44px 26px;
+  background:#ffffff;
+  border:3px solid #c7e3ff;
+  border-radius:26px;
+  box-shadow:0 20px 54px rgba(30,64,175,.18);
+  max-width:760px; width:92%;
+  position:relative; overflow:hidden;
+}
+
+.cover-badge{
+  position:absolute; top:16px; right:16px;
+  background:linear-gradient(135deg,#60a5fa,#22d3ee);
+  color:#fff; padding:8px 14px; border-radius:999px;
+  font-weight:900; letter-spacing:.6px;
+  box-shadow:0 10px 24px rgba(59,130,246,.35);
+}
+
+.grad-blue{
+  background: linear-gradient(90deg,#38bdf8 0%, #60a5fa 50%, #a5b4fc 100%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.grad-blue-sub{
+  display:inline-block; font-weight:900; font-size:22px; margin-top:6px;
+  background: linear-gradient(90deg,#22d3ee 0%, #38bdf8 45%, #93c5fd 100%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+
+.cover-title{
+  font-size:44px; line-height:1.08; margin:10px 0 6px;
+  font-weight:1000; letter-spacing:.3px; position:relative;
+}
+.cover-title::after{
+  content:"";
+  position:absolute; inset:-6px -10px;
+  background: radial-gradient(420px 140px at 50% 40%, rgba(96,165,250,.18), transparent 60%),
+              radial-gradient(320px 120px at 50% 60%, rgba(34,211,238,.16), transparent 60%);
+  filter: blur(7px); z-index:-1; border-radius:24px;
+}
+.cover-sub{ margin-bottom:6px; }
+
+.cover-tagline-th{ font-size:22px; font-weight:900; color:#0f172a; margin:4px 0 2px; }
+.cover-tagline-en{ font-size:18px; font-weight:800; color:#334155; margin:0 8px 12px; letter-spacing:.2px; }
+
+.cover-icons{ font-size:28px; margin:2px 0 14px; }
+
+.cover-btn{
+  appearance:none; border:0; cursor:pointer;
+  padding:14px 24px; border-radius:999px; font-weight:900; font-size:18px;
+  color:#fff; background:linear-gradient(135deg,#38bdf8,#2563eb);
+  box-shadow:0 16px 40px rgba(37,99,235,.28);
+  transition:transform .12s ease, box-shadow .12s ease, filter .12s ease;
+}
+.cover-btn:hover{ transform:translateY(-1px); box-shadow:0 22px 54px rgba(37,99,235,.36); filter:brightness(1.05); }
+.cover-btn:active{ transform:translateY(0); box-shadow:0 12px 28px rgba(37,99,235,.26); }
+
+/* Confetti */
+.confetti{ position:absolute; inset:0; pointer-events:none; overflow:hidden; }
+.confetti span{
+  position:absolute; width:10px; height:10px; border-radius:2px;
+  background:#60a5fa; opacity:.9; top:-10px; animation:fall 2.8s linear infinite;
+}
+.confetti span:nth-child(2){ left:12%; background:#93c5fd; animation-delay:.2s }
+.confetti span:nth-child(3){ left:22%; background:#22d3ee; animation-delay:.5s }
+.confetti span:nth-child(4){ left:34%; background:#38bdf8; animation-delay:.1s }
+.confetti span:nth-child(5){ left:46%; background:#a5b4fc; animation-delay:.4s }
+.confetti span:nth-child(6){ left:58%; background:#7dd3fc; animation-delay:.3s }
+.confetti span:nth-child(7){ left:70%; background:#5eead4; animation-delay:.6s }
+.confetti span:nth-child(8){ left:78%; background:#60a5fa; animation-delay:.25s }
+.confetti span:nth-child(9){ left:88%; background:#22d3ee; animation-delay:.15s }
+.confetti span:nth-child(10){ left:94%; background:#93c5fd; animation-delay:.35s }
+@keyframes fall{
+  0%{ transform:translateY(-20px) rotate(0deg); opacity:.9 }
+  100%{ transform:translateY(720px) rotate(540deg); opacity:.95 }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ===== Cover Page / Landing (Basic Set – Light Blue) ===== -->
+<div id="cover" class="cover-wrap basic">
+  <div class="cover-inner">
+    <div class="cover-badge">BASIC</div>
+    <h1 class="cover-title grad-blue">Kru Pai Classroom</h1>
+    <p class="cover-sub grad-blue-sub">Basic Vocabulary Set (Grade 1–3)</p>
+    <p class="cover-tagline-th">พิชิตคำศัพท์ 300 คำ สำหรับเด็กประถมต้น (ป.1–3)</p>
+    <p class="cover-tagline-en">Conquer 300 Basic Words for Kids (G1–3)</p>
+    <div class="cover-icons" aria-hidden="true">🌈 🐻 🎈 🍎 ✏️ 📘 ⭐</div>
+    <button id="startPlay" class="cover-btn">เริ่มเล่นเลย!</button>
+    <div class="confetti">
+      <span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+  </div>
+</div>
+
+<header>
+  <div class="logo"><div class="mark">KP</div><div><b>Kru Pai Classroom</b><div class="muted" style="font-size:12px">30 Days • 300 Words Challenge (All-in-One)</div></div></div>
+  <div style="font-size:18px;font-weight:900;color:#2563eb">👤 <span class="playerName"></span></div><div class="controls">
+    <button class="btn primary" id="continueBtn">เริ่ม 10 คำวันนี้</button>
+    <button class="btn reset" id="resetBtn">เริ่มใหม่</button>
+  </div>
+</header>
+
+<div class="player-banner">
+  <div class="player-card">
+    <div class="player-chip">PLAYER</div>
+    <div>ชื่อผู้เล่น: <span id="playerNameDisplay" class="player-name">-</span></div>
+    <div style="margin-left:auto">
+      <button id="changeNameBtn" class="btn">เปลี่ยนชื่อ</button>
+    </div>
+  </div>
+</div>
+
+
+<main class="wrap">
+  <!-- LADDERS -->
+  <section id="ladder" class="card">
+    <div class="progress">
+      <div><b>คะแนนสะสม:</b> <span id="totalCore">0</span> / 300</div>
+      <div class="bar"><span id="barFill" style="width:0%"></span></div>
+      <div class="pill">ต้องถูกทุกข้อ (10/10) + เรียงครบ (10/10) ถึงจะ PASS</div>
+    </div>
+    <h3 style="margin:12px 0 8px 0">ด่านคำศัพท์ 30 วัน</h3>
+    <div class="grid grid4 grid6 steps" id="steps"></div>
+  </section>
+
+  <!-- GAME -->
+  <section id="game" class="hide">
+    <div class="card center" id="intro">
+      <h1 id="title">10 คำวันนี้</h1><div class="muted">ผู้เล่น: <b id="playerInline" style="color:#2563eb"></b></div>
+      <p class="pill" style="background:#fee2e2;color:#991b1b;border:2px solid #fecaca"><b>ท่องให้ขึ้นใจแล้วไปต่อเลย!</b></p>
+      <p class="muted">ต้องผ่านทั้ง 2 ด่าน: เลือกตอบ + เรียงอักษร</p>
+      <div class="grid" id="review"></div>
+      <div style="margin:12px 0"><button class="btn primary" id="start">เริ่มทำแบบทดสอบ</button> <button class="btn" id="backToMap1">กลับแผนที่</button></div>
+    </div>
+
+    <!-- Stage 1: MCQ -->
+    <div id="quiz" class="card hide">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div><b id="qIdx">ข้อ 1/10</b></div>
+        
+      </div>
+      <div id="qArea" class="qa" style="margin:10px 0"></div>
+      <div id="opts"></div>
+    </div>
+
+    <!-- Stage 2: Unscramble -->
+    <div id="unscramble" class="card hide">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div><b id="uIdx">ข้อ 1/10</b></div>
+        
+      </div>
+      <div class="qa" style="margin:10px 0">เรียงอักษรให้ตรงกับ: <b id="thaiPrompt">-</b></div>
+      <div class="answerbox" id="answerBox"></div>
+      <div class="chips" id="chips"></div>
+      <div class="center"><button class="btn" id="clearAnswer">ล้างคำ</button><button class="btn primary" id="submitAnswer">ตรวจคำตอบ</button></div>
+    </div>
+
+    <div id="result" class="card center hide">
+      <h2 id="resHead">สรุปผล</h2>
+      <div style="margin:12px 0">
+        <button class="btn primary" id="saveAndBack">กลับแผนที่</button>
+        <button class="btn" id="retry">ลองใหม่</button>
+      </div>
+      <div class="muted">* ต้องถูกครบทั้ง 2 ด่าน (MCQ + เรียงอักษร) จึงจะนับผ่าน</div>
+    </div>
+  </section>
+</main>
+
+<div id="confettiBox"></div>
+<div id="celeWrap" class="cele-backdrop">
+  <div class="cele-card">
+    <h2 class="cele-title">ขอแสดงความยินดี! 🎉</h2>
+    <p class="cele-sub">คุณพิชิตครบ <b>300 คำ</b> แล้ว!</p>
+    <button id="celeBack" class="cele-btn">กลับไปแผนที่</button>
+  </div>
+</div>
+
+
+<div id="celebration" class="celebration">
+  <h1>🎉 ขอแสดงความยินดี! 🎉</h1>
+  <div class="msg">คุณพิชิตครบ 300 คำแล้ว!</div>
+  <button id="celeBack" class="btn primary">กลับไปแผนที่</button>
+</div>
+<canvas id="confettiCanvas" class="confetti"></canvas>
+
+
+<div id="nameModal" class="modal-backdrop">
+  <div class="modal">
+    <h3>ใส่ชื่อผู้เล่นก่อนเริ่ม</h3>
+    <div class="muted">พิมพ์ชื่อเล่นหรือชื่อจริงก็ได้ จะโชว์บนแผนที่และหน้าเกม</div>
+    <div class="field">
+      <input id="playerNameInput" type="text" placeholder="เช่น Nam, Ploy, Best" maxlength="24">
+      <button id="savePlayerName" class="btn primary">บันทึก</button>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+const VERSION='basic-set-lightblue-v3';
+try{
+  if(localStorage.VERSION!==VERSION){
+    localStorage.clear();
+    localStorage.VERSION=VERSION;
+  }
+}catch(e){}
+</script>
+
+<script>
+/************ DATA & STATE ************/
+const KEY='kpc_vocab_progress_v2';
+const CORE=10;
+/************ PLAYER NAME ************/
+const PKEY='kpc_player_name';
+function readPlayerName(){ try{ return localStorage.getItem(PKEY) || '' }catch(e){ return '' } }
+function writePlayerName(n){ localStorage.setItem(PKEY, (n||'').trim()); }
+function showNameModal(show){ document.getElementById('nameModal').style.display = show?'flex':'none'; }
+function ensurePlayerName(){
+  const name = readPlayerName().trim();
+  if(!name){
+    showNameModal(true);
+  } else {
+    document.getElementById('playerNameDisplay').textContent = name;
+    const inline = document.getElementById('playerInline'); if(inline) inline.textContent = name;
+  }
+}
+
+/************ CELEBRATION (300/300) ************/
+function startConfetti(){
+  const box = document.getElementById('confettiBox');
+  if(!box) return;
+  box.innerHTML = '';
+  const colors = ['#22c55e','#86efac','#f59e0b','#fde047','#38bdf8','#a78bfa'];
+  const N = 140;
+  for(let i=0;i<N;i++){
+    const d = document.createElement('div');
+    d.className='confetti';
+    d.style.left = Math.random()*100 + 'vw';
+    d.style.top = (-Math.random()*40) + 'vh';
+    d.style.background = colors[i % colors.length];
+    d.style.animation = `fallSpin ${4 + Math.random()*2}s linear ${Math.random()}s forwards`;
+    d.style.borderRadius = (Math.random()>.6)?'50%':'4px';
+    box.appendChild(d);
+  }
+  // auto stop after ~6s
+  setTimeout(()=>{ box.innerHTML=''; }, 6500);
+}
+function showCelebrate(on){
+  const el = document.getElementById('celeWrap');
+  if(!el) return;
+  el.style.display = on ? 'flex' : 'none';
+  if(on) startConfetti();
+}
+function checkCelebrate(st){
+  if(st && st.totalCore >= 300){
+    showCelebrate(true);
+  }
+}
+(function bindCelebrate(){
+  const btn = document.getElementById('celeBack');
+  if(btn){
+    btn.onclick = ()=>{
+      showCelebrate(false);
+      document.getElementById('game').classList.add('hide');
+      document.getElementById('ladder').classList.remove('hide');
+      renderLadder();
+      window.scrollTo({top:0, behavior:'smooth'});
+    };
+  }
+})();
+
+function bindNameUI(){
+  const input = document.getElementById('playerNameInput');
+  const saveBtn = document.getElementById('savePlayerName');
+  const changeBtn = document.getElementById('changeNameBtn');
+  function save(){
+    const v = (input.value||'').trim();
+    if(!v){ alert('กรุณาพิมพ์ชื่อผู้เล่น'); input.focus(); return; }
+    writePlayerName(v);
+    document.getElementById('playerNameDisplay').textContent = v;
+    const inline = document.getElementById('playerInline'); if(inline) inline.textContent = v;
+    showNameModal(false);
+  }
+  saveBtn.onclick = save;
+  input.addEventListener('keydown', e=>{ if(e.key==='Enter') save(); });
+  changeBtn.onclick = ()=>{
+    input.value = readPlayerName();
+    showNameModal(true);
+    setTimeout(()=> input.focus(), 0);
+  };
+}
+
+function readState(){ try{return JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){return {}} }
+function writeState(st){ localStorage.setItem(KEY, JSON.stringify(st)); }
+function ensureState(){
+  let st = readState();
+  if(!st.dayProgress) st = { dayProgress:{}, totalCore:0, lastPlayedDay:1 };
+  // recompute
+  let sum=0; for(let i=1;i<=30;i++){ if(st.dayProgress[i]?.pass) sum+=CORE; }
+  st.totalCore = Math.min(sum, 300);
+  // resume = first not passed
+  let resume=1; for(let i=1;i<=30;i++){ if(!st.dayProgress[i]?.pass){ resume=i; break; } }
+  st.lastPlayedDay = resume;
+  writeState(st);
+  return st;
+}
+const BANK = {"1":[{"en":"one","th":"หนึ่ง","ph":"วัน"},{"en":"two","th":"สอง","ph":"ทู"},{"en":"three","th":"สาม","ph":"ทรี"},{"en":"four","th":"สี่","ph":"ฟอร์"},{"en":"five","th":"ห้า","ph":"ไฟฟ์"},{"en":"six","th":"หก","ph":"ซิกซ์"},{"en":"seven","th":"เจ็ด","ph":"เซเวน"},{"en":"eight","th":"แปด","ph":"เอต"},{"en":"nine","th":"เก้า","ph":"ไนน์"},{"en":"ten","th":"สิบ","ph":"เท็น"}],"2":[{"en":"eleven","th":"สิบเอ็ด","ph":"อิเลเวน"},{"en":"twelve","th":"สิบสอง","ph":"ทเวลฟ์"},{"en":"thirteen","th":"สิบสาม","ph":"เทอร์-ทีน"},{"en":"fourteen","th":"สิบสี่","ph":"ฟอร์-ทีน"},{"en":"fifteen","th":"สิบห้า","ph":"ฟิฟ-ทีน"},{"en":"sixteen","th":"สิบหก","ph":"ซิก-สทีน"},{"en":"seventeen","th":"สิบเจ็ด","ph":"เซเวน-ทีน"},{"en":"eighteen","th":"สิบแปด","ph":"เอต-ทีน"},{"en":"nineteen","th":"สิบเก้า","ph":"ไนน์-ทีน"},{"en":"twenty","th":"ยี่สิบ","ph":"ทเวน-ที"}],"3":[{"en":"twenty-one","th":"ยี่สิบเอ็ด","ph":"ทเวน-ที วัน"},{"en":"twenty-two","th":"ยี่สิบสอง","ph":"ทเวน-ที ทู"},{"en":"twenty-three","th":"ยี่สิบสาม","ph":"ทเวน-ที ทรี"},{"en":"twenty-four","th":"ยี่สิบสี่","ph":"ทเวน-ที ฟอร์"},{"en":"twenty-five","th":"ยี่สิบห้า","ph":"ทเวน-ที ไฟฟ์"},{"en":"twenty-six","th":"ยี่สิบหก","ph":"ทเวน-ที ซิกซ์"},{"en":"twenty-seven","th":"ยี่สิบเจ็ด","ph":"ทเวน-ที เซเวน"},{"en":"twenty-eight","th":"ยี่สิบแปด","ph":"ทเวน-ที เอต"},{"en":"twenty-nine","th":"ยี่สิบเก้า","ph":"ทเวน-ที ไนน์"},{"en":"thirty","th":"สามสิบ","ph":"เธอร์-ที"}],"4":[{"en":"Monday","th":"วันจันทร์","ph":"มัน-เดย์"},{"en":"Tuesday","th":"วันอังคาร","ph":"ทิวซ-เดย์"},{"en":"Wednesday","th":"วันพุธ","ph":"เวนซ-เดย์"},{"en":"Thursday","th":"วันพฤหัสบดี","ph":"เธอร์ซ-เดย์"},{"en":"Friday","th":"วันศุกร์","ph":"ฟราย-เดย์"},{"en":"Saturday","th":"วันเสาร์","ph":"แซท-เทอะ-เดย์"},{"en":"Sunday","th":"วันอาทิตย์","ph":"ซัน-เดย์"},{"en":"today","th":"วันนี้","ph":"ทู-เดย์"},{"en":"yesterday","th":"เมื่อวาน","ph":"เยส-เตอ-เดย์"},{"en":"tomorrow","th":"พรุ่งนี้","ph":"ทู-มอ-โรว"}],"5":[{"en":"morning","th":"เช้า","ph":"มอร์-นิง"},{"en":"afternoon","th":"บ่าย","ph":"อาฟ-เทอะ-นูน"},{"en":"evening","th":"เย็น","ph":"อีฟ-นิง"},{"en":"night","th":"กลางคืน","ph":"ไนท์"},{"en":"week","th":"สัปดาห์","ph":"วีค"},{"en":"weekend","th":"สุดสัปดาห์","ph":"วีค-เอนด์"},{"en":"month","th":"เดือน","ph":"มันธ์"},{"en":"year","th":"ปี","ph":"เยียร์"},{"en":"holiday","th":"วันหยุด","ph":"ฮอลิ-เดย์"},{"en":"season","th":"ฤดู","ph":"ซี-ซัน"}],"6":[{"en":"January","th":"มกราคม","ph":"แจน-ยู-เอ-รี"},{"en":"February","th":"กุมภาพันธ์","ph":"เฟบ-รู-เอ-รี"},{"en":"March","th":"มีนาคม","ph":"มาร์ช"},{"en":"April","th":"เมษายน","ph":"เอ-พริล"},{"en":"May","th":"พฤษภาคม","ph":"เมย์"},{"en":"June","th":"มิถุนายน","ph":"จูน"},{"en":"July","th":"กรกฎาคม","ph":"จู-ไล"},{"en":"August","th":"สิงหาคม","ph":"ออ-กัสต์"},{"en":"September","th":"กันยายน","ph":"เซพ-เท็ม-เบอะ"},{"en":"October","th":"ตุลาคม","ph":"ออค-โท-เบอะ"}],"7":[{"en":"red","th":"สีแดง","ph":"เรด"},{"en":"blue","th":"สีน้ำเงิน","ph":"บลู"},{"en":"yellow","th":"สีเหลือง","ph":"เยล-โลว์"},{"en":"green","th":"สีเขียว","ph":"กรีน"},{"en":"orange","th":"สีส้ม","ph":"ออ-เรนจ์"},{"en":"pink","th":"สีชมพู","ph":"พิงก์"},{"en":"purple","th":"สีม่วง","ph":"เพอร์-เพิล"},{"en":"brown","th":"สีน้ำตาล","ph":"บราวน์"},{"en":"black","th":"สีดำ","ph":"แบล็ค"},{"en":"white","th":"สีขาว","ph":"ไวท์"}],"8":[{"en":"father","th":"พ่อ","ph":"ฟา-เธอะ"},{"en":"mother","th":"แม่","ph":"มา-เธอะ"},{"en":"parents","th":"พ่อแม่","ph":"แพ-เรินท์ส"},{"en":"brother","th":"พี่/น้องชาย","ph":"บรัธ-เธอะ"},{"en":"sister","th":"พี่/น้องสาว","ph":"ซิส-เธอะ"},{"en":"grandfather","th":"ปู่/ตา","ph":"แกรนด์-ฟา-เธอะ"},{"en":"grandmother","th":"ย่า/ยาย","ph":"แกรนด์-มา-เธอะ"},{"en":"uncle","th":"ลุง/อา/น้า (ชาย)","ph":"อัง-เคิล"},{"en":"aunt","th":"ป้า/อา/น้า (หญิง)","ph":"อานท์"},{"en":"cousin","th":"ลูกพี่ลูกน้อง","ph":"คัซ-ซิน"}],"9":[{"en":"head","th":"ศีรษะ","ph":"เฮด"},{"en":"hair","th":"ผม","ph":"แฮร์"},{"en":"face","th":"ใบหน้า","ph":"เฟซ"},{"en":"eye","th":"ตา","ph":"อาย"},{"en":"ear","th":"หู","ph":"เอีย"},{"en":"nose","th":"จมูก","ph":"โนส"},{"en":"mouth","th":"ปาก","ph":"เมาธ์"},{"en":"tooth","th":"ฟัน","ph":"ทูธ"},{"en":"neck","th":"คอ","ph":"เน็ค"},{"en":"shoulder","th":"ไหล่","ph":"โชล-เดอะ"}],"10":[{"en":"arm","th":"แขน","ph":"อาร์ม"},{"en":"hand","th":"มือ","ph":"แฮนด์"},{"en":"finger","th":"นิ้วมือ","ph":"ฟิง-เกอร์"},{"en":"leg","th":"ขา","ph":"เลก"},{"en":"knee","th":"เข่า","ph":"นี"},{"en":"foot","th":"เท้า","ph":"ฟุต"},{"en":"toe","th":"นิ้วเท้า","ph":"โท"},{"en":"back","th":"หลัง","ph":"แบ็ค"},{"en":"belly","th":"พุง/ท้อง","ph":"เบล-ลี่"},{"en":"skin","th":"ผิว","ph":"สกิน"}],"11":[{"en":"cat","th":"แมว","ph":"แคท"},{"en":"dog","th":"สุนัข","ph":"ด็อก"},{"en":"fish","th":"ปลา","ph":"ฟิช"},{"en":"bird","th":"นก","ph":"เบิร์ด"},{"en":"rabbit","th":"กระต่าย","ph":"แร็บ-บิท"},{"en":"hamster","th":"หนูแฮมสเตอร์","ph":"แฮม-สเตอ"},{"en":"turtle","th":"เต่า","ph":"เทอร์-เทิล"},{"en":"parrot","th":"นกแก้ว","ph":"แพร-ร็อท"},{"en":"frog","th":"กบ","ph":"ฟรอก"},{"en":"snail","th":"หอยทาก","ph":"สเนล"}],"12":[{"en":"cow","th":"วัว","ph":"คาว"},{"en":"pig","th":"หมู","ph":"พิก"},{"en":"chicken","th":"ไก่","ph":"ชิค-เคิน"},{"en":"duck","th":"เป็ด","ph":"ดัค"},{"en":"goat","th":"แพะ","ph":"โกท"},{"en":"sheep","th":"แกะ","ph":"ชีพ"},{"en":"horse","th":"ม้า","ph":"ฮอร์ส"},{"en":"buffalo","th":"ควาย","ph":"บัฟ-ฟะ-โล"},{"en":"bee","th":"ผึ้ง","ph":"บี"},{"en":"butterfly","th":"ผีเสื้อ","ph":"บั๊ท-เทอะ-ฟลาย"}],"13":[{"en":"rice","th":"ข้าว","ph":"ไรซ์"},{"en":"noodles","th":"ก๋วยเตี๋ยว/เส้น","ph":"นู-เดิลส์"},{"en":"soup","th":"ซุป","ph":"ซูพ"},{"en":"egg","th":"ไข่","ph":"เอ็ก"},{"en":"bread","th":"ขนมปัง","ph":"เบร็ด"},{"en":"milk","th":"นม","ph":"มิลค์"},{"en":"water","th":"น้ำ","ph":"วอ-เทอะ"},{"en":"juice","th":"น้ำผลไม้","ph":"จูซ"},{"en":"ice cream","th":"ไอศกรีม","ph":"ไอซ์ ครีม"},{"en":"candy","th":"ลูกอม","ph":"แคน-ดี"}],"14":[{"en":"apple","th":"แอปเปิล","ph":"แอพ-เปิล"},{"en":"banana","th":"กล้วย","ph":"บะ-นา-นะ"},{"en":"orange (fruit)","th":"ส้ม","ph":"ออ-เรนจ์"},{"en":"grape","th":"องุ่น","ph":"เกรพ"},{"en":"mango","th":"มะม่วง","ph":"แมน-โก"},{"en":"watermelon","th":"แตงโม","ph":"วอ-เทอะ-เม-ลอน"},{"en":"pineapple","th":"สับปะรด","ph":"ไพ-แนพ-เพิล"},{"en":"strawberry","th":"สตรอว์เบอร์รี","ph":"สตรอ-เบอ-รี"},{"en":"papaya","th":"มะละกอ","ph":"พะ-พาย-ยะ"},{"en":"coconut","th":"มะพร้าว","ph":"โค-โค-นัท"}],"15":[{"en":"book","th":"หนังสือ","ph":"บุ๊ค"},{"en":"notebook","th":"สมุด","ph":"โน้ต-บุ๊ก"},{"en":"pencil","th":"ดินสอ","ph":"เพ็น-ซิล"},{"en":"pen","th":"ปากกา","ph":"เพ็น"},{"en":"ruler","th":"ไม้บรรทัด","ph":"รู-เลอะ"},{"en":"eraser","th":"ยางลบ","ph":"อิ-เร-เซอะ"},{"en":"bag","th":"กระเป๋า","ph":"แบก"},{"en":"desk","th":"โต๊ะเรียน","ph":"เดสก์"},{"en":"chair","th":"เก้าอี้","ph":"แชร์"},{"en":"board","th":"กระดาน","ph":"บอร์ด"}],"16":[{"en":"teacher","th":"ครู","ph":"ที-เชอะ"},{"en":"student","th":"นักเรียน","ph":"สตู-เดนท์"},{"en":"classroom","th":"ห้องเรียน","ph":"คลาส-รูม"},{"en":"playground","th":"สนามเด็กเล่น","ph":"เพลย์-กราวด์"},{"en":"library","th":"ห้องสมุด","ph":"ไล-บราริ"},{"en":"canteen","th":"โรงอาหาร","ph":"แคน-ทีน"},{"en":"toilet","th":"ห้องน้ำ","ph":"ทอย-เล็ท"},{"en":"nurse room","th":"ห้องพยาบาล","ph":"เนิร์ส รูม"},{"en":"principal","th":"ผู้อำนวยการ","ph":"พริน-ซิ-เพิล"},{"en":"guard","th":"รปภ.","ph":"การ์ด"}],"17":[{"en":"house","th":"บ้าน","ph":"เฮาส์"},{"en":"room","th":"ห้อง","ph":"รูม"},{"en":"kitchen","th":"ห้องครัว","ph":"คิท-เชิน"},{"en":"bathroom","th":"ห้องน้ำ","ph":"บาธ-รูม"},{"en":"bedroom","th":"ห้องนอน","ph":"เบด-รูม"},{"en":"living room","th":"ห้องนั่งเล่น","ph":"ลิฟ-วิ่ง รูม"},{"en":"door","th":"ประตู","ph":"ดอร์"},{"en":"window","th":"หน้าต่าง","ph":"วิน-โดว"},{"en":"floor","th":"พื้น","ph":"ฟลอร์"},{"en":"ceiling","th":"เพดาน","ph":"ซี-ลิง"}],"18":[{"en":"shirt","th":"เสื้อเชิ้ต/เสื้อ","ph":"เชิร์ต"},{"en":"t-shirt","th":"เสื้อยืด","ph":"ที-เชิร์ต"},{"en":"pants","th":"กางเกงขายาว","ph":"แพนท์ส"},{"en":"shorts","th":"กางเกงขาสั้น","ph":"ชอร์ทส์"},{"en":"skirt","th":"กระโปรง","ph":"สเคิร์ต"},{"en":"dress","th":"เดรส","ph":"เดรส"},{"en":"shoes","th":"รองเท้า","ph":"ชูซ"},{"en":"socks","th":"ถุงเท้า","ph":"ซ็อคส์"},{"en":"hat","th":"หมวก","ph":"แฮต"},{"en":"jacket","th":"เสื้อแจ็กเก็ต","ph":"แจ็ค-เก็ต"}],"19":[{"en":"sunny","th":"แดดออก","ph":"ซัน-นี"},{"en":"cloudy","th":"มีเมฆ","ph":"เคลา-ดี"},{"en":"rainy","th":"ฝนตก","ph":"เรน-นี"},{"en":"windy","th":"ลมแรง","ph":"วิน-ดี"},{"en":"storm","th":"พายุ","ph":"สตอร์ม"},{"en":"hot","th":"ร้อน","ph":"ฮอต"},{"en":"cold","th":"หนาว","ph":"โคลด์"},{"en":"warm","th":"อุ่น","ph":"วอร์ม"},{"en":"cool","th":"เย็นสบาย","ph":"คูล"},{"en":"rainbow","th":"สายรุ้ง","ph":"เรน-โบว์"}],"20":[{"en":"school","th":"โรงเรียน","ph":"สคูล"},{"en":"park","th":"สวนสาธารณะ","ph":"พาร์ค"},{"en":"hospital","th":"โรงพยาบาล","ph":"ฮอส-พิ-ทอล"},{"en":"bank","th":"ธนาคาร","ph":"แบงก์"},{"en":"post office","th":"ไปรษณีย์","ph":"โพสท์ ออฟ-ฟิส"},{"en":"police station","th":"สถานีตำรวจ","ph":"โพลีซ สเต-ชัน"},{"en":"fire station","th":"สถานีดับเพลิง","ph":"ไฟเออะ สเต-ชัน"},{"en":"market","th":"ตลาด","ph":"มาร์-เก็ต"},{"en":"shop","th":"ร้านค้า","ph":"ช็อป"},{"en":"temple","th":"วัด","ph":"เท็ม-เพิล"}],"21":[{"en":"eat","th":"กิน","ph":"อีท"},{"en":"drink","th":"ดื่ม","ph":"ดริ้งค์"},{"en":"sleep","th":"นอน","ph":"สลีพ"},{"en":"sit","th":"นั่ง","ph":"ซิท"},{"en":"stand","th":"ยืน","ph":"สแตนด์"},{"en":"run","th":"วิ่ง","ph":"รัน"},{"en":"walk","th":"เดิน","ph":"วอล์ค"},{"en":"jump","th":"กระโดด","ph":"จัมพ์"},{"en":"read","th":"อ่าน","ph":"รีด"},{"en":"write","th":"เขียน","ph":"ไรท์"}],"22":[{"en":"open","th":"เปิด","ph":"โอเพิน"},{"en":"close","th":"ปิด","ph":"โคลส"},{"en":"wash","th":"ล้าง","ph":"วอช"},{"en":"clean","th":"ทำความสะอาด","ph":"คลีน"},{"en":"cook","th":"ทำอาหาร","ph":"คุค"},{"en":"draw","th":"วาดรูป","ph":"ดรอว์"},{"en":"paint","th":"ระบายสี","ph":"เพนต์"},{"en":"play","th":"เล่น","ph":"เพลย์"},{"en":"sing","th":"ร้องเพลง","ph":"ซิง"},{"en":"dance","th":"เต้น","ph":"แดนซ์"}],"23":[{"en":"big","th":"ใหญ่","ph":"บิ๊ก"},{"en":"small","th":"เล็ก","ph":"สมอล"},{"en":"long","th":"ยาว","ph":"ลอง"},{"en":"short","th":"สั้น","ph":"ชอร์ต"},{"en":"fast","th":"เร็ว","ph":"ฟาสท์"},{"en":"slow","th":"ช้า","ph":"สโลว์"},{"en":"happy","th":"มีความสุข","ph":"แฮพ-พี"},{"en":"sad","th":"เศร้า","ph":"แซด"},{"en":"good","th":"ดี","ph":"กูด"},{"en":"bad","th":"ไม่ดี","ph":"แบด"}],"24":[{"en":"circle","th":"วงกลม","ph":"เซอร์-เคิล"},{"en":"square","th":"สี่เหลี่ยมจัตุรัส","ph":"สแควร์"},{"en":"triangle","th":"สามเหลี่ยม","ph":"ไทร-แอง-เกิล"},{"en":"rectangle","th":"สี่เหลี่ยมผืนผ้า","ph":"เรค-แทง-เกิล"},{"en":"star","th":"ดาว","ph":"สตาร์"},{"en":"heart","th":"รูปหัวใจ","ph":"ฮาร์ท"},{"en":"light blue","th":"สีฟ้าอ่อน","ph":"ไลท์ บลู"},{"en":"dark blue","th":"สีน้ำเงินเข้ม","ph":"ดาร์ค บลู"},{"en":"gold","th":"สีทอง","ph":"โกลด์"},{"en":"silver","th":"สีเงิน","ph":"ซิล-เวอะ"}],"25":[{"en":"please","th":"กรุณา/โปรด","ph":"พลีส"},{"en":"sorry","th":"ขอโทษ","ph":"ซอ-รี"},{"en":"thank you","th":"ขอบคุณ","ph":"แทงคิ้ว"},{"en":"excuse me","th":"ขอทาง/ขออนุญาต","ph":"เอ็กซ์-คิ้วซ มี"},{"en":"hungry","th":"หิว","ph":"ฮัง-กรี"},{"en":"thirsty","th":"กระหายน้ำ","ph":"เธอร์ส-ที"},{"en":"tired","th":"เหนื่อย","ph":"ไทเอิด"},{"en":"angry","th":"โกรธ","ph":"แอ็ง-กรี"},{"en":"scared","th":"กลัว","ph":"สแกร์ด"},{"en":"brave","th":"กล้าหาญ","ph":"เบรฟ"}],"26":[{"en":"o’clock","th":"โมงตรง","ph":"โอ-คล็อก"},{"en":"half past","th":"ครึ่ง","ph":"ฮาฟ พาสท์"},{"en":"quarter past","th":"เลยมา 15 นาที","ph":"คอ-เทอะ พาสท์"},{"en":"quarter to","th":"อีก 15 นาทีจะถึง","ph":"คอ-เทอะ ทู"},{"en":"morning","th":"ตอนเช้า","ph":"มอร์-นิง"},{"en":"noon","th":"เที่ยง","ph":"นูน"},{"en":"evening","th":"ตอนเย็น","ph":"อีฟ-นิง"},{"en":"night","th":"กลางคืน","ph":"ไนท์"},{"en":"today","th":"วันนี้","ph":"ทู-เดย์"},{"en":"now","th":"ตอนนี้","ph":"นาว"}],"27":[{"en":"car","th":"รถยนต์","ph":"คาร์"},{"en":"bus","th":"รถบัส","ph":"บัส"},{"en":"train","th":"รถไฟ","ph":"เทรน"},{"en":"boat","th":"เรือ","ph":"โบ๊ท"},{"en":"plane","th":"เครื่องบิน","ph":"เพลน"},{"en":"bicycle","th":"จักรยาน","ph":"ไบ-ซิเคิล"},{"en":"motorcycle","th":"มอเตอร์ไซค์","ph":"โม-เทอะ-ไซเคิล"},{"en":"taxi","th":"แท็กซี่","ph":"แท็ก-ซี"},{"en":"van","th":"รถตู้","ph":"แวน"},{"en":"ambulance","th":"รถพยาบาล","ph":"แอม-บิว-เลินซ์"}],"28":[{"en":"what","th":"อะไร","ph":"วอท"},{"en":"where","th":"ที่ไหน","ph":"แวร์"},{"en":"who","th":"ใคร","ph":"ฮู"},{"en":"when","th":"เมื่อไร","ph":"เว็น"},{"en":"why","th":"ทำไม","ph":"วาย"},{"en":"how","th":"อย่างไร","ph":"เฮา"},{"en":"raise your hand","th":"ยกมือ","ph":"เรซ ยัวร์ แฮนด์"},{"en":"listen","th":"ตั้งใจฟัง","ph":"ลิซ-ซึน"},{"en":"repeat","th":"พูดตาม/ทวน","ph":"รี-พีท"},{"en":"finish","th":"เสร็จ/ทำเสร็จ","ph":"ฟิ-นิช"}],"29":[{"en":"tree","th":"ต้นไม้","ph":"ทรี"},{"en":"flower","th":"ดอกไม้","ph":"ฟลาว-เวอะ"},{"en":"grass","th":"หญ้า","ph":"กราส"},{"en":"river","th":"แม่น้ำ","ph":"ริ-เวอะ"},{"en":"mountain","th":"ภูเขา","ph":"เมา-เทิน"},{"en":"sea","th":"ทะเล","ph":"ซี"},{"en":"sky","th":"ท้องฟ้า","ph":"สไค"},{"en":"rain","th":"ฝน","ph":"เรน"},{"en":"sun","th":"ดวงอาทิตย์","ph":"ซัน"},{"en":"moon","th":"ดวงจันทร์","ph":"มูน"}],"30":[{"en":"help","th":"ช่วย","ph":"เฮล์พ"},{"en":"share","th":"แบ่งปัน","ph":"แชร์"},{"en":"line up","th":"เข้าแถว","ph":"ไลน์ อัพ"},{"en":"sit properly","th":"นั่งให้เรียบร้อย","ph":"ซิท พรอพ-เพอะ-ลี่"},{"en":"be quiet","th":"เงียบหน่อย","ph":"บี ไควเอ็ท"},{"en":"don’t run","th":"ห้ามวิ่ง","ph":"โดนท์ รัน"},{"en":"wash hands","th":"ล้างมือ","ph":"วอช แฮนด์ส"},{"en":"homework","th":"การบ้าน","ph":"โฮม-เวิร์ค"},{"en":"test","th":"การสอบ/แบบทดสอบ","ph":"เทสต์"},{"en":"game","th":"เกม","ph":"เกม"}]};
+/************ LADDERS ************/
+function renderLadder(){
+  bindNameUI(); ensurePlayerName();
+  const _n = readPlayerName().trim(); if(_n){ document.getElementById('playerNameDisplay').textContent=_n; const inline=document.getElementById('playerInline'); if(inline) inline.textContent=_n; }
+  const st = ensureState();
+  document.getElementById('totalCore').textContent = st.totalCore;
+  document.getElementById('barFill').style.width = (st.totalCore/300*100).toFixed(1)+'%';
+  checkCelebrate(st);
+  const box = document.getElementById('steps'); box.innerHTML='';
+  for(let i=1;i<=30;i++){
+    const passed = !!st.dayProgress[i]?.pass;
+    const div = document.createElement('div');
+    div.className = 'step' + (passed?' pass':'');
+    div.innerHTML = `<div style="font-weight:900">Day ${i}</div><div class="muted" style="font-size:12px">10 คำ</div>` + (passed?'<div class="badge-pass">PASS</div>':'');
+    div.style.cursor='pointer'; div.dataset.day=i;
+    div.addEventListener('click', ()=> openGame(i));
+    box.appendChild(div);
+  }
+  document.getElementById('continueBtn').onclick = ()=> openGame(st.lastPlayedDay);
+  document.getElementById('resetBtn').onclick = ()=>{ if(confirm('เริ่มใหม่ทั้งหมด?\n(ล้างทั้งความคืบหน้าและชื่อผู้เล่น)')){ localStorage.removeItem(KEY); localStorage.removeItem(PKEY); location.reload(); } };
+}
+function openGame(day){
+  bindNameUI(); ensurePlayerName();
+  const _pn = readPlayerName().trim(); if(_pn){ const inline=document.getElementById('playerInline'); if(inline) inline.textContent=_pn; }
+  // Switch sections
+  document.getElementById('ladder').classList.add('hide');
+  document.getElementById('game').classList.remove('hide');
+  startGame(day);
+}
+document.getElementById('backToMap1').onclick = ()=>{ document.getElementById('game').classList.add('hide'); document.getElementById('ladder').classList.remove('hide'); };
+
+function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]] } return a; }
+
+/************ GAME FLOW ************/
+let G_DAY=1, WORDS=[], qIndex=0, quizScore=0, questions=[], quizTimer=null;
+let uIndex=0, unscrambleScore=0, uList=[], uTimer=null, picked=[], answerSlots=[];
+
+function startGame(day){
+  G_DAY = day || 1;
+  WORDS = BANK[String(G_DAY)] || BANK["1"];
+  document.getElementById('title').textContent = 'Day ' + G_DAY + ' • 10 คำ';
+  // Build review
+  const box = document.getElementById('review'); box.innerHTML='';
+  WORDS.forEach(w=>{ const d=document.createElement('div'); d.className='card'; d.innerHTML=`<b style="font-size:22px">${w.en}</b><div style="color:#dc2626;font-size:16px">${w.ph||""}</div><div class="muted" style="margin-top:4px;font-size:18px">${w.th}</div>`; box.appendChild(d); });
+  // Reset stages
+  document.getElementById('intro').classList.remove('hide');
+  document.getElementById('quiz').classList.add('hide');
+  document.getElementById('unscramble').classList.add('hide');
+  document.getElementById('result').classList.add('hide');
+  // Bind start
+  document.getElementById('start').onclick = startQuiz;
+}
+
+function buildQuestions(){
+  questions = WORDS.map(w=>({prompt:`"${w.th}" ภาษาอังกฤษคือข้อใด?`, correct:w.en}));
+  questions.forEach(q=>{ const all = WORDS.map(w=>w.en); const wrong = shuffle(all.filter(x=>x!==q.correct)).slice(0,3); q.options = shuffle([q.correct, ...wrong]); });
+  questions = shuffle(questions);
+}
+
+function startQuiz(){
+  buildQuestions(); qIndex=0; quizScore=0; renderQ(); 
+  document.getElementById('intro').classList.add('hide'); document.getElementById('quiz').classList.remove('hide');
+}
+function renderQ(){
+  document.getElementById('qIdx').textContent = `ข้อ ${qIndex+1}/10`;
+  const q = questions[qIndex];
+  document.getElementById('qArea').textContent = q.prompt;
+  const box = document.getElementById('opts'); box.innerHTML='';
+  q.options.forEach(opt=>{ const b=document.createElement('button'); b.className='opt'; b.textContent=opt; b.onclick=()=>handleQ(opt); box.appendChild(b); });
+}
+function handleQ(ans){
+  const q=questions[qIndex]; const btns=[...document.querySelectorAll('#opts .opt')];
+  btns.forEach(b=>b.disabled=true); clearInterval(quizTimer);
+  btns.forEach(b=>{ if(b.textContent===q.correct) b.classList.add('correct'); if(b.textContent===ans && ans!==q.correct) b.classList.add('wrong'); });
+  if(ans===q.correct) quizScore++;
+  setTimeout(()=>nextQ(), 400);
+}
+function nextQ(){ qIndex++; if(qIndex>=questions.length){ startUnscramble(); } else { renderQ();  } }
+
+/* Unscramble */
+function startUnscramble(){
+  document.getElementById('quiz').classList.add('hide');
+  document.getElementById('unscramble').classList.remove('hide');
+  uList = shuffle(WORDS.map(w=>({th:w.th, en:w.en})));
+  uIndex = 0; unscrambleScore = 0; renderUnscramble(); 
+}
+function renderUnscramble(){
+  document.getElementById('uIdx').textContent = `ข้อ ${uIndex+1}/10`;
+  const it = uList[uIndex];
+  document.getElementById('thaiPrompt').textContent = it.th;
+  const letters = shuffle(it.en.split(''));
+  picked = Array(letters.length).fill(null);
+  const ab = document.getElementById('answerBox'); ab.innerHTML=''; answerSlots=[];
+  for(let i=0;i<letters.length;i++){ const s=document.createElement('div'); s.className='slot'; ab.appendChild(s); answerSlots.push(s); }
+  const chips = document.getElementById('chips'); chips.innerHTML='';
+  letters.forEach(ch=>{ const c=document.createElement('div'); c.className='chip'; c.textContent=ch; c.dataset.letter=ch; c.onclick=()=>placeLetter(c); chips.appendChild(c); });
+  document.getElementById('clearAnswer').onclick = clearPicked;
+  document.getElementById('submitAnswer').onclick = submitUnscramble;
+}
+function placeLetter(chip){
+  const idx = picked.indexOf(null); if(idx===-1) return;
+  picked[idx] = chip.dataset.letter;
+  answerSlots[idx].textContent = chip.dataset.letter;
+  answerSlots[idx].classList.add('filled');
+  chip.classList.add('used');
+}
+function clearPicked(){
+  picked = picked.map(()=>null);
+  answerSlots.forEach(s=>{ s.textContent=''; s.classList.remove('filled') });
+  document.querySelectorAll('.chip.used').forEach(c=>c.classList.remove('used'));
+}
+function submitUnscramble(){
+  const it = uList[uIndex];
+  const ans = picked.join('');
+  if(ans.length !== it.en.length){ alert('ยังเรียงไม่ครบ'); return; }
+  clearInterval(uTimer);
+  if(ans.toLowerCase() === it.en.toLowerCase()){
+    unscrambleScore++; alert('ถูกต้อง!');
+    uIndex++; if(uIndex>=uList.length){ endGame(); } else { renderUnscramble();  }
+  }else{ alert('ยังไม่ถูก ลองใหม่'); renderUnscramble();  }
+}
+
+function endGame(){
+  document.getElementById('unscramble').classList.add('hide');
+  const pass = (quizScore>=10 && unscrambleScore>=10);
+  document.getElementById('resHead').textContent = pass ? 'ผ่านด่าน! ✔' : 'ยังไม่ผ่าน ✖';
+  document.getElementById('result').classList.remove('hide');
+  document.getElementById('retry').onclick = ()=> startGame(G_DAY);
+  document.getElementById('saveAndBack').onclick = ()=>{
+    if(pass){
+      let st = ensureState();
+      st.dayProgress[G_DAY] = { pass:true, core:CORE };
+      let sum=0; for(let i=1;i<=30;i++){ if(st.dayProgress[i]?.pass) sum+=CORE; }
+      st.totalCore = Math.min(sum,300);
+      let next=1; for(let i=1;i<=30;i++){ if(!st.dayProgress[i]?.pass){ next=i; break; } }
+      st.lastPlayedDay = next;
+      writeState(st);
+      if(st.totalCore>=300){ showCelebrate(true); return; }
+    }
+    // back to map
+    document.getElementById('game').classList.add('hide');
+    document.getElementById('ladder').classList.remove('hide');
+    ensurePlayer(); renderLadder(); checkCelebration();
+    window.scrollTo({top:0, behavior:'smooth'});
+  };
+}
+
+
+/************ PLAYER NAME ************/
+function getPlayerName(){ return localStorage.getItem(KEY+'_player')||''; }
+function setPlayerName(n){ localStorage.setItem(KEY+'_player', n); }
+
+function ensurePlayer(){
+  let name = getPlayerName();
+  if(!name){
+    // prompt modal
+    let n = prompt('กรุณาใส่ชื่อผู้เล่นก่อนเริ่ม:', '');
+    if(n && n.trim().length>0){ setPlayerName(n.trim()); name=n.trim(); }
+    else { setPlayerName('Guest'); name='Guest'; }
+  }
+  document.querySelectorAll('.playerName').forEach(e=>e.textContent=name);
+  return name;
+}
+
+
+/************ CELEBRATION ************/
+function checkCelebration(){
+  const st = ensureState();
+  if(st.totalCore>=300){
+    showCelebration();
+  }
+}
+function showCelebration(){
+  const c = document.getElementById('celebration');
+  c.style.display='flex';
+  launchConfetti();
+  document.getElementById('celeBack').onclick = ()=>{
+    c.style.display='none';
+    document.getElementById('game').classList.add('hide');
+    document.getElementById('ladder').classList.remove('hide');
+    renderLadder();
+  };
+}
+function launchConfetti(){
+  const canvas = document.getElementById('confettiCanvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+  const pieces = Array.from({length:150}, ()=>({
+    x: Math.random()*canvas.width,
+    y: Math.random()*canvas.height - canvas.height,
+    w: 8+Math.random()*4,
+    h: 14+Math.random()*6,
+    color: `hsl(${Math.random()*360},70%,60%)`,
+    speed: 2+Math.random()*3,
+    rot: Math.random()*2*Math.PI
+  }));
+  function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    pieces.forEach(p=>{
+      ctx.save();
+      ctx.translate(p.x,p.y);
+      ctx.rotate(p.rot);
+      ctx.fillStyle=p.color;
+      ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);
+      ctx.restore();
+      p.y += p.speed; p.rot += 0.05;
+      if(p.y>canvas.height){ p.y = -20; p.x=Math.random()*canvas.width; }
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+}
+
+/************ INIT ************/
+if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', ()=>{ renderLadder(); bindNameUI(); ensurePlayerName(); }); } else { renderLadder(); bindNameUI(); ensurePlayerName(); }
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', ()=>{
+  const cover = document.getElementById('cover');
+  const btn = document.getElementById('startPlay');
+  btn?.addEventListener('click', ()=> cover.classList.add('off'));
+});
+</script>
+
+</body>
+</html>
